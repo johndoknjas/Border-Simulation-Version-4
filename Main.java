@@ -17,11 +17,11 @@ class Main {
 
     // The Ratio Lists:  These store all the ratios of Canadians to Americans every day at both of the borders, and overall:
 
-    private static ArrayList <Double> can_border_ratio_list = new ArrayList <Double>();
+    private static ArrayList <Double> can_border_ratio_list = new ArrayList<>();
     // Holds all the daily ratios of Canadians to Americans at the Canada border.
-    private static ArrayList <Double> usa_border_ratio_list = new ArrayList <Double>();
+    private static ArrayList <Double> usa_border_ratio_list = new ArrayList<>();
     // Holds all the daily ratios of Canadians to Americans at the USA border.
-    private static ArrayList <Double> total_border_ratio_list = new ArrayList <Double>();
+    private static ArrayList <Double> total_border_ratio_list = new ArrayList<>();
     // Holds all the daily ratios of Canadians to Americans overall at the border.
 
     // Test variables for the above lists:
