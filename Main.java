@@ -1,7 +1,6 @@
 // Note: The first "100 days" of this simulation are just to get Canadians in America and Americans in Canada.  The stuff included for the final stats
 // takes place only after day 100.  So, I made sure to run the simulation for 10 years and 100 days, not just 10 years.
 
-import java.util.Scanner;
 import java.lang.Math;
 import java.util.ArrayList;
 
