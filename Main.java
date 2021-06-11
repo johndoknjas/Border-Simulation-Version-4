@@ -4,8 +4,14 @@
 import java.lang.Math;
 import java.util.ArrayList;
 
-// CONTINUE HERE - change everything to camel case.
-// Also, try to modularize things into functions.
+// CONTINUE HERE - try to modularize things into functions.
+
+// Also, after you're done with all the refactoring for this project,
+// make a test project that tests the output of the refactored project
+// against the project before the refactoring (so commit 3315ed3). This
+// will involve replacing Math.random() with reading from a pre-determined
+// text file of values (each of which was already generated with Math.random()).
+// The output from both programs should be identical.
 
 class Main {
     // Total counters (keep track of which people cross which border for the entire length of the simulation):
@@ -370,6 +376,9 @@ class Main {
     }
 
     public static String roundDecimalPlace(String num, int decimal_place) {
+        if (num == null) {
+            throw new IllegalArgumentException("num parameter is null");
+        }
         String replacement = "";
         int decimalIndex = num.indexOf(".");
         replacement += num.substring(0, decimalIndex + 1);
