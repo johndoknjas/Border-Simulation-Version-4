@@ -6,10 +6,10 @@ public class Person {
     // Test variables:
     // These variables test the "set_how_long_overnight" method, to ensure
     // the average result is equal to "average_length_overnight".
-    protected static int can_counter = 0;
-    protected static int can_trials = 0;
-    protected static int usa_counter = 0;
-    protected static int usa_trials = 0;
+    private static int canCounter = 0;
+    private static int canTrials = 0;
+    private static int usaCounter = 0;
+    private static int usaTrials = 0;
 
     // Variables - 2 types:
 
@@ -46,6 +46,22 @@ public class Person {
         this.chance_of_overnight = chance_of_overnight;
         this.average_length_overnight = average_length_overnight;
         set_how_long_overnight(this.average_length_overnight);
+    }
+
+    public static int getCanCounter() {
+        return canCounter;
+    }
+
+    public static int getCanTrials() {
+        return canTrials;
+    }
+
+    public static int getUsaCounter() {
+        return usaCounter;
+    }
+
+    public static int getUsaTrials() {
+        return usaTrials;
     }
 
     public boolean get_is_away() {
@@ -97,12 +113,12 @@ public class Person {
 
         // Tests:
         if (citizen_of.equals("can")) {
-            can_trials ++;
-            can_counter += how_long_overnight;
+            canTrials ++;
+            canCounter += how_long_overnight;
         }
         else {
-            usa_trials ++;
-            usa_counter += how_long_overnight;
+            usaTrials ++;
+            usaCounter += how_long_overnight;
         }
     }
 

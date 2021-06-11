@@ -335,13 +335,13 @@ class Main {
         // Test:
         System.out.print ("\n\n\n");
         System.out.println ("Results for the test of the \"how_long_overnight\" method:");
-        System.out.println ("Average number of nights that Canadians spent on trip: " + (double) Person.can_counter / Person.can_trials);
-        System.out.println ("Average number of nights that Americans spent on trip: " + (double) Person.usa_counter / Person.usa_trials);
-
+        System.out.println ("Average number of nights that Canadians spent on trip: " +
+                            (double) Person.getCanCounter() / Person.getCanTrials());
+        System.out.println ("Average number of nights that Americans spent on trip: " +
+                            (double) Person.getUsaCounter() / Person.getUsaTrials());
     } // End of main method.
 
     // Method that prints daily stats to the screen:
-
     public static void printDailyStats(int day, int canadiansUsaBorder, int americansUsaBorder, int canadiansCanBorder, int americansCanBorder) {
         String white_space = "                                         ";
         // This variable is just a long white_space I can use for outputting to screen.
