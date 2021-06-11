@@ -10,31 +10,31 @@ import java.util.ArrayList;
 class Main {
     // Total counters (keep track of which people cross which border for the entire length of the simulation):
 
-    private static int total_canadians_can_border = 0;
-    private static int total_canadians_usa_border = 0;
-    private static int total_americans_can_border = 0;
-    private static int total_americans_usa_border = 0;
+    private static int totalCanadiansCanBorder = 0;
+    private static int totalCanadiansUsaBorder = 0;
+    private static int totalAmericansCanBorder = 0;
+    private static int totalAmericansUsaBorder = 0;
 
     // The Ratio Lists:  These store all the ratios of Canadians to Americans every day at both of the borders, and overall:
 
-    private static ArrayList <Double> can_border_ratio_list = new ArrayList<>();
+    private static ArrayList <Double> canBorderRatioList = new ArrayList<>();
     // Holds all the daily ratios of Canadians to Americans at the Canada border.
-    private static ArrayList <Double> usa_border_ratio_list = new ArrayList<>();
+    private static ArrayList <Double> usaBorderRatioList = new ArrayList<>();
     // Holds all the daily ratios of Canadians to Americans at the USA border.
-    private static ArrayList <Double> total_border_ratio_list = new ArrayList<>();
+    private static ArrayList <Double> totalBorderRatioList = new ArrayList<>();
     // Holds all the daily ratios of Canadians to Americans overall at the border.
 
     // Test variables for the above lists:
 
-    private static double can_border_average_ratio = 0;
-    private static double usa_border_average_ratio = 0;
-    private static double total_border_average_ratio = 0;
+    private static double canBorderAverageRatio = 0;
+    private static double usaBorderAverageRatio = 0;
+    private static double totalBorderAverageRatio = 0;
 
     // Variable that counts how many times (if any) there were more Americans than
     // Canadians at the border, after the first 100 days:
 
-    private static int more_americans_counter = 0;
-    private static int day_of_exception = 0; // holds the most recent day the above occurrence happened, if it ever happened.
+    private static int moreAmericansCounter = 0;
+    private static int dayOfException = 0; // holds the most recent day the above occurrence happened, if it ever happened.
 
     public static void main(String[] args) {
         ArrayList <Person> list = new ArrayList<>();
@@ -69,10 +69,10 @@ class Main {
         for (int day = 1; day <= 3650 + 100; day ++) {
             // Create the counter variables for this day:
 
-            int canadians_can_border = 0; // stores how many canadians are at the canada border for a day.
-            int americans_can_border = 0; // stores how many americans are at the canada border for a day.
-            int canadians_usa_border = 0; // stores how many canadians are at the usa border for a day.
-            int americans_usa_border = 0; // stores how many americans are at the usa border for a day.
+            int canadiansCanBorder = 0; // stores how many canadians are at the canada border for a day.
+            int americansCanBorder = 0; // stores how many americans are at the canada border for a day.
+            int canadiansUsaBorder = 0; // stores how many canadians are at the usa border for a day.
+            int americansUsaBorder = 0; // stores how many americans are at the usa border for a day.
 
             // Inside for loop, which goes through each "Person" object in the list:
             for (int i = 0; i < list.size(); i++) {
@@ -93,10 +93,10 @@ class Main {
                         // Now to add to the correct counter variable, for keeping track of which people are at which border:
                         boolean isCanadian = person.get_citizen_of().equals("can");
                         if (isCanadian) {
-                            canadians_usa_border ++;
+                            canadiansUsaBorder ++;
                         }
                         else {
-                            americans_can_border ++;
+                            americansCanBorder ++;
                         }
 
                         // Now, the person has left the border and is in the other country:
@@ -114,10 +114,10 @@ class Main {
                             if (isCanadian) {
                                 // So, the person is a canadian driving back to Canada (i.e., crossing
                                 // the Canadian border).
-                                canadians_can_border ++;
+                                canadiansCanBorder ++;
                             }
                             else {
-                                americans_usa_border ++;
+                                americansUsaBorder ++;
                             }
 
                             // Now the person has left the border and is back in their own country.
@@ -144,10 +144,10 @@ class Main {
                         // Person drives back to the border...
                         if (person.get_citizen_of().equals("can")) {
                             // The person is Canadian, and they are returning to Canada:
-                            canadians_can_border ++;
+                            canadiansCanBorder ++;
                         }
                         else {
-                            americans_usa_border ++;
+                            americansUsaBorder ++;
                         }
 
                         // Person has now crossed the border and is driving home.
@@ -165,13 +165,13 @@ class Main {
             // the list, for this current day.
 
             if (day >= 100 &&
-                (americans_can_border > canadians_can_border || americans_usa_border > canadians_usa_border)) {
-                more_americans_counter++;
-                day_of_exception = day;
-                print_daily_stats(day, canadians_usa_border, americans_usa_border, canadians_can_border, americans_can_border);
+                (americansCanBorder > canadiansCanBorder || americansUsaBorder > canadiansUsaBorder)) {
+                moreAmericansCounter++;
+                dayOfException = day;
+                printDailyStats(day, canadiansUsaBorder, americansUsaBorder, canadiansCanBorder, americansCanBorder);
             }
             else if (day <= 30 || day % 100 == 0 || day >= 3650) {
-                print_daily_stats(day, canadians_usa_border, americans_usa_border, canadians_can_border, americans_can_border);
+                printDailyStats(day, canadiansUsaBorder, americansUsaBorder, canadiansCanBorder, americansCanBorder);
             }
 
             // Before the double for loop re-iterates and moves on to the next day, I want to add the daily counters
@@ -180,41 +180,41 @@ class Main {
 
             // If day >= 100, I also want to add today's ratios of Canadians to Americans to my Ratio Lists:
             if (day >= 100) {
-                total_canadians_can_border += canadians_can_border;
-                total_canadians_usa_border += canadians_usa_border;
-                total_americans_can_border += americans_can_border;
-                total_americans_usa_border += americans_usa_border;
+                totalCanadiansCanBorder += canadiansCanBorder;
+                totalCanadiansUsaBorder += canadiansUsaBorder;
+                totalAmericansCanBorder += americansCanBorder;
+                totalAmericansUsaBorder += americansUsaBorder;
 
                 // I also want to add the ratios of Canadians to Americans at both of the borders to my Ratio Lists:
-                can_border_ratio_list.add( (double) canadians_can_border / americans_can_border);
-                usa_border_ratio_list.add( (double) canadians_usa_border / americans_usa_border);
+                canBorderRatioList.add( (double) canadiansCanBorder / americansCanBorder);
+                usaBorderRatioList.add( (double) canadiansUsaBorder / americansUsaBorder);
 
-                // for the "total_border_ratio_list", I need the number of overall Canadians at both borders and number of overall Americans at both borders.
-                double overall_canadians = canadians_can_border + canadians_usa_border;
-                double overall_americans = americans_can_border + americans_usa_border;
-                total_border_ratio_list.add(overall_canadians / overall_americans);
+                // for the "totalBorderRatioList", I need the number of overall Canadians at both borders and number of overall Americans at both borders.
+                double overallCanadians = canadiansCanBorder + canadiansUsaBorder;
+                double overallAmericans = americansCanBorder + americansUsaBorder;
+                totalBorderRatioList.add(overallCanadians / overallAmericans);
             }
 
         } // End of outside for Loop, which goes through the days.  From here it re-iterates again, or ends.
 
         // Now to display the total stats, from the total counters:
         System.out.println ("\n\n\n   TOTAL STATS:");
-        System.out.println (total_canadians_usa_border + " Canadians went to the USA.");
-        System.out.println (total_canadians_can_border + " Canadians went back to Canada.");
-        System.out.println (total_americans_can_border + " Americans went to Canada.");
-        System.out.println (total_americans_usa_border + " Americans went back to the USA.");
-        System.out.println ("Ratio of Canadians to Americans at the CAN Border: " + (double) total_canadians_can_border / total_americans_can_border);
-        System.out.println ("Ratio of Canadians to Americans at the USA Border: " + (double) total_canadians_usa_border / total_americans_usa_border);
+        System.out.println (totalCanadiansUsaBorder + " Canadians went to the USA.");
+        System.out.println (totalCanadiansCanBorder + " Canadians went back to Canada.");
+        System.out.println (totalAmericansCanBorder + " Americans went to Canada.");
+        System.out.println (totalAmericansUsaBorder + " Americans went back to the USA.");
+        System.out.println ("Ratio of Canadians to Americans at the CAN Border: " + (double) totalCanadiansCanBorder / totalAmericansCanBorder);
+        System.out.println ("Ratio of Canadians to Americans at the USA Border: " + (double) totalCanadiansUsaBorder / totalAmericansUsaBorder);
 
         // Now to display the total ratio for both ways:
-        double total_canadians = total_canadians_can_border + total_canadians_usa_border;
-        double total_americans = total_americans_can_border + total_americans_usa_border;
+        double total_canadians = totalCanadiansCanBorder + totalCanadiansUsaBorder;
+        double total_americans = totalAmericansCanBorder + totalAmericansUsaBorder;
         System.out.println ("Total ratio of Canadians to Americans: " + total_canadians / total_americans);
 
         // Now to display how many times there were more Americans than Canadians at either side of the border:
-        System.out.println ("\n\n\n\n\n\nNumber of times there were more Americans than Canadians on either side of the border: " + more_americans_counter);
-        if (more_americans_counter >= 1) {
-            System.out.println ("The latest day this happened on was day " + day_of_exception);
+        System.out.println ("\n\n\n\n\n\nNumber of times there were more Americans than Canadians on either side of the border: " + moreAmericansCounter);
+        if (moreAmericansCounter >= 1) {
+            System.out.println ("The latest day this happened on was day " + dayOfException);
         }
         else {
             System.out.println ("There was never a day that there were more Americans than Canadians on either side of the border.");
@@ -225,16 +225,16 @@ class Main {
         // that is called.
 
         // Now to demonstrate the probabilities of each ratio of Canadians to Americans occurring at the borders.
-        // A double for loop will be used to go through all three Ratio Lists, starting with the "can_border_ratio_list":
+        // A double for loop will be used to go through all three Ratio Lists, starting with the "canBorderRatioList":
         System.out.println ("\n\n\n\n\n\nFor the Canada Border:");
         for (double i = 0; i < 20; i += 0.1) {
             // i < 20 because it's pretty much impossible there will be a 20:1 Canadian to American ratio at the border.
 
             // If i is something like 1.099999999999999 when it should be 1.10, I will round it now:
-            i = round_decimal_place(i, 2);
+            i = roundDecimalPlace(i, 2);
 
             double i_greatest = i + 0.1;
-            i_greatest = round_decimal_place(i_greatest, 2); // CONTINUE HERE - this variable isn't being used. Bug?
+            i_greatest = roundDecimalPlace(i_greatest, 2); // CONTINUE HERE - this variable isn't being used. Bug?
 
             // Before going further, I want to get i and i+0.1 in String format, rounded to two decimal places
             // (or four characters). I will be rounding the String (even though I already rounded the double)
@@ -242,17 +242,17 @@ class Main {
 
             String i_beginning = Double.toString(i);
             if (i_beginning.length() > 5) {
-                i_beginning = round_decimal_place(i_beginning, 2);
+                i_beginning = roundDecimalPlace(i_beginning, 2);
             }
             String i_end = Double.toString(i + 0.1);
             if (i_end.length() > 5) {
-                i_end = round_decimal_place(i_end, 2);
+                i_end = roundDecimalPlace(i_end, 2);
             }
 
-            // Let's work on the "can_border_ratio_list".  I want to find out how many ratios there are in it that
+            // Let's work on the "canBorderRatioList".  I want to find out how many ratios there are in it that
             // are between i and i+0.1.  To do this, I'll run through the list by using a for-each loop.
             int counter = 0; // This variable keeps track of how many ratios in the list are between i and i+0.1.
-            for (Double temp: can_border_ratio_list) {
+            for (Double temp: canBorderRatioList) {
                 if (temp >= i && temp < i+0.1) {
                     counter ++;
                 }
@@ -260,28 +260,28 @@ class Main {
 
             // Now to display the results to the screen.
             // I need to know the percentage of ratios out of the entire list:
-            double percentage = (double) counter / can_border_ratio_list.size() * 100;
+            double percentage = (double) counter / canBorderRatioList.size() * 100;
             if (percentage > 0) {
                 System.out.println (percentage + "% of the ratios were between " + i_beginning + " and " + (i_end) + ", inclusive of the beginning (" + i_beginning + ")");
             }
         }
 
         // Now to find the average ratio at Canada border:
-        for (int index = 0; index < can_border_ratio_list.size(); index ++) {
-            can_border_average_ratio += can_border_ratio_list.get(index);
+        for (int index = 0; index < canBorderRatioList.size(); index ++) {
+            canBorderAverageRatio += canBorderRatioList.get(index);
         }
-        can_border_average_ratio /= can_border_ratio_list.size();
-        System.out.println ("Average ratio at Canada border: " + can_border_average_ratio);
+        canBorderAverageRatio /= canBorderRatioList.size();
+        System.out.println ("Average ratio at Canada border: " + canBorderAverageRatio);
 
-        // Now to work on the "usa_border_ratio_list":
+        // Now to work on the "usaBorderRatioList":
         System.out.println ("\n\nFor the USA Border:");
         for (double i = 0; i < 20; i += 0.1) {
             // i < 20 because it's pretty much impossible there will be a 20:1 Canadian to American ratio at the border.
 
-            // Let's work on the "usa_border_ratio_list".  I want to find out how many ratios there are in it that
+            // Let's work on the "usaBorderRatioList".  I want to find out how many ratios there are in it that
             // are between i and i+0.1.  To do this, I'll run through the list by using a for-each loop.
             int counter = 0; // This variable keeps track of how many ratios in the list are between i and i+0.1.
-            for (Double temp: usa_border_ratio_list) {
+            for (Double temp: usaBorderRatioList) {
                 if (temp >= i && temp < i + 0.1) {
                     counter ++;
                 }
@@ -289,29 +289,29 @@ class Main {
 
             // Now to display the results to the Screen:
             // I need to know the percentage of ratios out of the entire list:
-            double percentage = (double) counter / usa_border_ratio_list.size() * 100;
+            double percentage = (double) counter / usaBorderRatioList.size() * 100;
             if (percentage > 0) {
                 System.out.println (percentage + "% of the ratios were between " + i + " and " + (i+0.1) + ", inclusive at the beginning " + "(" + i + ")");
             }
         }
 
         // Average ratio at USA border:
-        for (int index = 0; index < usa_border_ratio_list.size(); index ++) {
-            usa_border_average_ratio += usa_border_ratio_list.get(index);
+        for (int index = 0; index < usaBorderRatioList.size(); index ++) {
+            usaBorderAverageRatio += usaBorderRatioList.get(index);
         }
-        usa_border_average_ratio /= usa_border_ratio_list.size();
-        System.out.println ("Average ratio at USA border: " + usa_border_average_ratio);
+        usaBorderAverageRatio /= usaBorderRatioList.size();
+        System.out.println ("Average ratio at USA border: " + usaBorderAverageRatio);
 
-        // Now to work on the "total_border_ratio_list":
+        // Now to work on the "totalBorderRatioList":
         System.out.println ("\n\nFor everyone at the border overall:");
         for (double i = 0; i < 20; i += 0.1) {
             // i < 20 because it's pretty much impossible there will be a 20:1 Canadian to American ratio at the border.
 
-            // Let's work on the "total_border_ratio_list".  I want to find out how many ratios there are in it that
+            // Let's work on the "totalBorderRatioList".  I want to find out how many ratios there are in it that
             // are between i and i+0.1.  To do this, I'll run through the list by using a for-each loop.
 
             int counter = 0; // This variable keeps track of how many ratios in the list are between i and i + 0.1.
-            for (Double temp: total_border_ratio_list) {
+            for (Double temp: totalBorderRatioList) {
                 if (temp >= i && temp < i + 0.1) {
                     counter ++;
                 }
@@ -319,18 +319,18 @@ class Main {
 
             // Now to display the results to the Screen:
             // I need to know the percentage of ratios out of the entire list:
-            double percentage = (double) counter / total_border_ratio_list.size() * 100;
+            double percentage = (double) counter / totalBorderRatioList.size() * 100;
             if (percentage > 0) {
                 System.out.println (percentage + "% of the ratios were between " + i + " and " + (i+0.1) + ", inclusive at the beginning (" + i + ")");
             }
         }
 
         // Total Border Average Ratio:
-        for (int index = 0; index < total_border_ratio_list.size(); index ++) {
-            total_border_average_ratio += total_border_ratio_list.get(index);
+        for (int index = 0; index < totalBorderRatioList.size(); index ++) {
+            totalBorderAverageRatio += totalBorderRatioList.get(index);
         }
-        total_border_average_ratio /= total_border_ratio_list.size();
-        System.out.println ("Average ratio overall at the border: " + total_border_average_ratio);
+        totalBorderAverageRatio /= totalBorderRatioList.size();
+        System.out.println ("Average ratio overall at the border: " + totalBorderAverageRatio);
 
         // Test:
         System.out.print ("\n\n\n");
@@ -342,7 +342,7 @@ class Main {
 
     // Method that prints daily stats to the screen:
 
-    public static void print_daily_stats(int day, int canadians_usa_border, int americans_usa_border, int canadians_can_border, int americans_can_border) {
+    public static void printDailyStats(int day, int canadiansUsaBorder, int americansUsaBorder, int canadiansCanBorder, int americansCanBorder) {
         String white_space = "                                         ";
         // This variable is just a long white_space I can use for outputting to screen.
 
@@ -351,35 +351,35 @@ class Main {
         System.out.println ("        CANADA\n");
 
         // Now to put in the ratio for Canadians to Americans in Canada:
-        System.out.print(white_space + ((double) canadians_usa_border / americans_usa_border) + " CAN to USA");
+        System.out.print(white_space + ((double) canadiansUsaBorder / americansUsaBorder) + " CAN to USA");
         System.out.print("\n\n");
-        System.out.println (canadians_usa_border + " CAN\n" + americans_usa_border + " USA");
+        System.out.println (canadiansUsaBorder + " CAN\n" + americansUsaBorder + " USA");
         System.out.println ("-----------------------"); // Symbolizes the border.
-        System.out.println ("               " + canadians_can_border + " CAN\n" + "               " + americans_can_border + " USA");
+        System.out.println ("               " + canadiansCanBorder + " CAN\n" + "               " + americansCanBorder + " USA");
         System.out.print("\n");
 
         // Now to put in the ratio for Canadians to Americans in America:
-        System.out.print(white_space + ((double) canadians_can_border / americans_can_border) + " CAN to USA");
+        System.out.print(white_space + ((double) canadiansCanBorder / americansCanBorder) + " CAN to USA");
         System.out.print("\n");
         System.out.println ("        AMERICA");
 
         // Now to output the overall ratio of Canadians to Americans, on both sides of the border:
-        double overall_canadians = canadians_can_border + canadians_usa_border;
-        double overall_americans = americans_can_border + americans_usa_border;
-        System.out.print ("Overall, the total ratio is " + overall_canadians / overall_americans + " Canadians to Americans.");
+        double overallCanadians = canadiansCanBorder + canadiansUsaBorder;
+        double overallAmericans = americansCanBorder + americansUsaBorder;
+        System.out.print ("Overall, the total ratio is " + overallCanadians / overallAmericans + " Canadians to Americans.");
     }
 
-    public static String round_decimal_place(String num, int decimal_place) {
+    public static String roundDecimalPlace(String num, int decimal_place) {
         String replacement = "";
-        int decimal_index = num.indexOf(".");
-        replacement += num.substring(0, decimal_index + 1);
+        int decimalIndex = num.indexOf(".");
+        replacement += num.substring(0, decimalIndex + 1);
 
         // Now to add the appropriate number of decimal places:
-        replacement += (num.substring(decimal_index + 1, decimal_index + 1 + decimal_place));
+        replacement += (num.substring(decimalIndex + 1, decimalIndex + 1 + decimal_place));
         return replacement;
     }
 
-    public static double round_decimal_place(double num, int decimal_place) {
+    public static double roundDecimalPlace(double num, int decimal_place) {
         double replacement = num;
         replacement *= Math.pow(10, decimal_place);
         replacement = Math.round(replacement);
