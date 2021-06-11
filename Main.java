@@ -81,17 +81,17 @@ class Main {
                 // the list[i] object.
 
                 // First to check if the person is at home:
-                if (!person.get_is_away()) {
+                if (!person.getIsAway()) {
                     // So, the person is at home in their own country.
 
                     // Now to decide if they should go on a trip:
-                    if (Math.random() * 100 <= person.get_chance_of_trip()) {
+                    if (Math.random() * 100 <= person.getChanceOfTrip()) {
                         // The person will go on a trip by crossing the border
                         // to the other country:
-                        person.set_at_border(true);
+                        person.setAtBorder(true);
 
                         // Now to add to the correct counter variable, for keeping track of which people are at which border:
-                        boolean isCanadian = person.get_citizen_of().equals("can");
+                        boolean isCanadian = person.getCitizenOf().equals("can");
                         if (isCanadian) {
                             canadiansUsaBorder ++;
                         }
@@ -100,17 +100,17 @@ class Main {
                         }
 
                         // Now, the person has left the border and is in the other country:
-                        person.set_at_border(false);
-                        person.set_is_away(true);
+                        person.setAtBorder(false);
+                        person.setIsAway(true);
 
                         // Now to decide if the person should stay overnight:
-                        if (Math.random() * 100 <= person.get_chance_of_overnight()) {
-                            person.set_staying_overnight(true);
+                        if (Math.random() * 100 <= person.getChanceOfOvernight()) {
+                            person.setStayingOvernight(true);
                         }
                         else {
                             // So, the person is only away for the day and will now drive back
                             // to their country:
-                            person.set_at_border(true);
+                            person.setAtBorder(true);
                             if (isCanadian) {
                                 // So, the person is a canadian driving back to Canada (i.e., crossing
                                 // the Canadian border).
@@ -122,11 +122,11 @@ class Main {
 
                             // Now the person has left the border and is back in their own country.
                             // Reset all the variables that have to do with them crossing the border:
-                            person.set_is_away(false);
-                            person.set_staying_overnight(false);
-                            person.set_at_border(false);
-                            person.set_day_counter(0);
-                            person.set_how_long_overnight(person.get_average_length_overnight());
+                            person.setIsAway(false);
+                            person.setStayingOvernight(false);
+                            person.setAtBorder(false);
+                            person.setDayCounter(0);
+                            person.setHowLongOvernight(person.getAverageLengthOvernight());
                             // Resetting the person's "how_long_overnight" var for their next trip.
                         }
                     }
@@ -134,15 +134,15 @@ class Main {
                 else {
                     // Person is away in the other country. Increment the counter
                     // for the number of days they are away:
-                    person.increase_day_counter();
-                    if (person.get_day_counter() >= person.get_how_long_overnight()) {
+                    person.increaseDayCounter();
+                    if (person.getDayCounter() >= person.getHowLongOvernight()) {
                         // The person has been away for long enough and it is time to go home.
 
                         // Reset the day_counter:
-                        person.set_day_counter(0);
+                        person.setDayCounter(0);
 
                         // Person drives back to the border...
-                        if (person.get_citizen_of().equals("can")) {
+                        if (person.getCitizenOf().equals("can")) {
                             // The person is Canadian, and they are returning to Canada:
                             canadiansCanBorder ++;
                         }
@@ -152,11 +152,11 @@ class Main {
 
                         // Person has now crossed the border and is driving home.
                         // Reset all their variables that are involved in them crossing the border:
-                        person.set_is_away(false);
-                        person.set_staying_overnight(false);
-                        person.set_at_border(false);
-                        person.set_day_counter(0);
-                        person.set_how_long_overnight(person.get_average_length_overnight());
+                        person.setIsAway(false);
+                        person.setStayingOvernight(false);
+                        person.setAtBorder(false);
+                        person.setDayCounter(0);
+                        person.setHowLongOvernight(person.getAverageLengthOvernight());
                         // Resetting the person's "how_long_overnight" var for their next trip.
                     }
                 }
