@@ -375,7 +375,7 @@ class Main {
         System.out.print ("Overall, the total ratio is " + overallCanadians / overallAmericans + " Canadians to Americans.");
     }
 
-    public static String roundDecimalPlace(String num, int decimal_place) {
+    public static String roundDecimalPlace(String num, int decimalPlace) {
         if (num == null) {
             throw new IllegalArgumentException("num parameter is null");
         }
@@ -384,15 +384,15 @@ class Main {
         replacement += num.substring(0, decimalIndex + 1);
 
         // Now to add the appropriate number of decimal places:
-        replacement += (num.substring(decimalIndex + 1, decimalIndex + 1 + decimal_place));
+        replacement += (num.substring(decimalIndex + 1, decimalIndex + 1 + decimalPlace));
         return replacement;
     }
 
-    public static double roundDecimalPlace(double num, int decimal_place) {
+    public static double roundDecimalPlace(double num, int decimalPlace) {
         double replacement = num;
-        replacement *= Math.pow(10, decimal_place);
+        replacement *= Math.pow(10, decimalPlace);
         replacement = Math.round(replacement);
-        replacement /= Math.pow(10, decimal_place);
+        replacement /= Math.pow(10, decimalPlace);
         return replacement;
     }
 }
