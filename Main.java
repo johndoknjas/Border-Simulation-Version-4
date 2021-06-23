@@ -65,7 +65,7 @@ class Main {
 
         // For both countries' populations, there is one tenth in each in the lists (going by 2009 pop.).
         // Since this simulation is just meant to compare how many citizens of each country are at the border
-        // in a day, proportions are the only thing that matter.
+        // in a day, proportions are the only things that matter.
 
         // Now to go through the list, and run the simulation.  This will be done with a double for loop:
 
